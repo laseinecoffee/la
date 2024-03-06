@@ -5,130 +5,43 @@
     <meta charset="utf-8">
     <title>預約系統</title>
     <link rel="stylesheet" href="style3.css">
+
     <link rel="icon" type="image/x-icon" href="image/loge-2.png">
-    <style type="text/css">
-        html {
-            box-sizing: border-box;
-        }
 
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: inherit;
-        }
-
-
-        body {
-            background-size: cover;
-            text-align: center;
-            line-height: 45px;
-            padding: 20px 0;
-        }
-
-        h1,
-        h2 {
-            color: white;
-            margin: 0;
-        }
-
-        nav>ul {
-            opacity: 0.7;
-            background-color: rgb(125, 140, 125);
-            list-style: none;
-            /* 移除項目符號 */
-            margin: 0;
-            padding: 0;
-        }
-
-        nav a {
-            color: inherit;
-            /* 移除超連結顏色 */
-            display: block;
-            /* 讓 <a> 填滿 <li> */
-            font-size: 1.2rem;
-            padding: 10px;
-            text-decoration: none;
-            /* 移除超連結底線 */
-        }
-
-        /* 滑鼠移到 <a> 時變成深底淺色 */
-        nav li:hover {
-            background-color: rgb(125, 140, 125);
-            color: white;
-        }
-
-        .flex-nav {
-            display: flex;
-            justify-content: center;
-        }
-
-        .inline-block-nav {
-            text-align: center;
-            font-size: 0;
-            /* 移除 <li> 之間的空隙 */
-        }
-
-        .inline-block-nav>li {
-            display: inline-block;
-        }
-
-        input[type=text] {
-            width: 20%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border-radius: 10px;
-        }
-
-        select {
-            width: 20%;
-            padding: 15px 20px;
-            border: 1;
-            border-radius: 10px;
-            background-color: #F5F5F5;
-        }
-    </style>
 </head>
 
 <?php
-$host="localhost";
-$dbuser="laseine";
-$dbpassword="123456";
+$servername="localhost";
+$username="laseine";
+$password="123456";
 $dbname="reserve";
-$conn = new mysqli($host, $dbuser, $dbpassword, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 //檢查連線
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 ?>
-
-
-
 
 <body
     background="https://assets-au-01.kc-usercontent.com/e0a5d496-0e0b-02ac-957e-28068fa4bd4d/1d770df0-8588-44f8-be20-bbbc18bcf80d/cafe%20interior%20design.jpg">
-    <h1>La Seine coffee</h1>
-    <h2>
-        <div style="letter-spacing:10px;">賽納咖啡</div>
-    </h2>
-    <nav>
-        <ul class="flex-nav">
-            <li><a href="./about.html">關於我們</a></li>
-            <li><a href="./MEMU.html">MEMU</a></li>
-            <li><a href="./order.html">我要訂位</a></li>
-            <li><a href="nember.html">聯絡我們</a></li>
-        </ul>
-    </nav>
-
+    <header>
+        <nav>
+            <ul>
+                <li><a href="seat.html">關於我們</a></li>
+                <li><a href="MEMU.html">MEMU</a></li>
+                <li><a href="order.html">我要訂位</a></li>
+                <li><a href="nember.html">聯絡我們</a></li>
+            </ul>
+        </nav>
+    </header>
     <h2>
         <div style="letter-spacing:10px;">線上預約</div>
     </h2>
 
-<?php
-$sql = "SELECT * FROM reserve WHERE id=101";
+    <?php
+ 
+$sql = "SELECT * FROM reserve WHERE id=39";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -136,73 +49,86 @@ if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {
 
 ?>
-    
     <form action="reserve.php" method="post">
-        <label for="username">姓名：</label>
-        <input type="text" id="username" name="username" value="<?php echo $row['username']; ?>" />
-        <br></br>
-        <label for="phonenumber">電話：</label>
-        <input type="text" id="phonenumber" name="phonenumber">
-        <br></br>
-        <label for="bookdate">日期：</label>
-        <input type="date" id="bookdate" name="bookdate" placeholder="2014-09-18">
-        
-        <br></br>
-        <select id="time" name="time">
-            <label for="time">用餐時段：</label>
-            <option value="1" <?php if($row['time'] == "1" ) { ?> selected="selected" <?php }?> >
-            <option value="2">11:30~13:00</option>
-            <option value="3">13:00~14:30</option>
-            <option value="4">14:30~16:00</option>
-            <option value="5">16:00~17:30</option>
-            </select>
-            <br></br>
+        <table border="1" style="text-align:center">
+            <form action="reserve.php" method="post">
+                <tr>
+
+                    <th width="500">
+                        <input type="text" id="username" name="username" value="姓名">
+                    </th>
+                    <th width="500">
+                        <input type="text" id="phonenumber" name="phonenumber" value="電話">
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" id="bookdate" placeholder="2014-09-18">
+                    </td>
+                    <td> <select id="time" name="time">
+                            <label for="time">用餐時段：</label>
+                            <option>用餐時段</option>
+                            <option value="1">10:00~11:30</option>
+                            <option value="2">11:30~13:00</option>
+                            <option value="3">13:00~14:30</option>
+                            <option value="4">14:30~16:00</option>
+                            <option value="5">16:00~17:30</option>
+                        </select></td>
+                <tr>
+                    <td><select id="adults" name="adults">
+                            <p class="sc-evZas kFafaz">用餐人數</p>
+                            <option value="2">2位大人</option>
+                            <option value="3">3位大人</option>
+                            <option value="4">4位大人</option>
+                            <option value="5">5位大人</option>
+                            <option value="6">6位大人</option>
+                            <option value="7">7位大人</option>
+                            <option value="8">8位大人</option>
+                        </select></td>
+                    <td><select id="children" name="children">
+                            <label for="phonenumber">小孩：</label>
+                            <option value="1">1位小孩</option>
+                            <option value="2">2位小孩</option>
+                            <option value="3">3位小孩</option>
+                            <option value="4">4位小孩</option>
+                            <option value="5">5位小孩</option>
+                            <option value="6">6位小孩</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <font face="標楷體">
+                            <div id="checkbox">
+                                <label><input type="checkbox" name="A1"><span class="round button">A1</span></label>
+                                <label><input type="checkbox" name="A2"><span class="round button">A2</span></label>
+                                <label><input type="checkbox" name="B1"><span class="round button">B1</span></label>
+                                <label><input type="checkbox" name="B2"><span class="round button">B2</span></label>
+                                <label><input type="checkbox" name="C1"><span class="round button">C1</span></label>
+                                <label><input type="checkbox" name="C2"><span class="round button">C2</span></label>
+                            </div>
+                        </font>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <input type="reset" class="B" style="background-color:white" value="確認送出">
+
+                        <input type="reset" class="B" style="background-color:white" value="重新輸入">
+
+                    </td>
+                </tr>
 
 
-        <select id="adults" name="adults">
-            <p class="sc-evZas kFafaz">用餐人數</p>
-            <option value="2" <?php if($row['adults'] == "2" ) { ?> selected="selected" <?php }?> >
-            <option value="3">3位大人</option>
-            <option value="4">4位大人</option>
-            <option value="5">5位大人</option>
-            <option value="6">6位大人</option>
-            <option value="7">7位大人</option>
-            <option value="8">8位大人</option>
-        </select>
-
-        <br></br>
-
-        <select id="children" name="children">
-            <label for="phonenumber">小孩：</label>
-            <option value="1" <?php if($row['children'] == "1" ) { ?> selected="selected" <?php }?> >
-            <option value="2">2位小孩</option>
-            <option value="3">3位小孩</option>
-            <option value="4">4位小孩</option>
-            <option value="5">5位小孩</option>
-            <option value="6">6位小孩</option>
-        </select>
-        <br></br>
-        <div id="checkbox">
-            <label><input type="checkbox" name="variety[]" value="A1" checked="checked" /><span class="round button">A1</span></label>
-            <label><input type="checkbox" name="variety[]" value="A2" checked="checked" /><span class="round button">A2</span></label>
-            <label><input type="checkbox" name="variety[]" value="B1" checked="checked" /><span class="round button">B1</span></label>
-            <label><input type="checkbox" name="variety[]" value="B2" /><span class="round button">B2</span></label>
-            <label><input type="checkbox" name="variety[]" value="C1" /><span class="round button">C1</span></label>
-            <label><input type="checkbox" name="variety[]" value="C2" /><span class="round button">C2</span></label>
-           </div>
 
 
-        <input type="submit" class="B" style="background-color:white" value="確認送出">
-        <input type="reset" class="B" style="background-color:white" value="重新輸入">
-        
-<?php           
+                <?php           
         }
 } else {
   echo "0 results";
 }
 $conn->close();
 ?>
-    </form>
+            </form>
 </body>
 
 </html>
